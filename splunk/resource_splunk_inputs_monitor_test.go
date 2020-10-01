@@ -27,6 +27,9 @@ resource "splunk_inputs_monitor" "monitor" {
 
 func TestAccSplunkInputsMonitor(t *testing.T) {
 	// Required since monitor inputs are limited to certain paths within $SPLUNK_HOME
+	if os.Getenv("SKIP_DOCKER") != "" {
+		t.Skip("Skipping not finished test")
+	}
 	path := os.Getenv("SPLUNK_HOME")
 	f := filepath.Join(path, "/var/log/splunk/health.log")
 	config := fmt.Sprintf(inputsMonitorConfig, f)
